@@ -6,7 +6,7 @@ export default function DoTheFetch({changePokemon, changeTypePokemon, changeWeak
   const [typeInput, setTypeInput] = useState("");
   const [weaknessInput, setWeaknessInput] = useState("");
   const [currentPoke, setCurrentPoke] = useState()
-  const [currentListPoke, setCurrentTypePoke] = useState()
+  const [currentListPoke, setCurrentListPoke] = useState()
 
   
   
@@ -45,7 +45,7 @@ export default function DoTheFetch({changePokemon, changeTypePokemon, changeWeak
       return response.json();
     })
     .then(function (data) {
-        setCurrentTypePoke(data);
+        setCurrentListPoke(data.pokemon);
         startImg();
     })
     .catch((err)=>{
@@ -97,6 +97,7 @@ useEffect(() => {
 
     return (
         <>
+        <p>Individual Pokemon Search</p>
         <div className="searchDiv">
             <label>Search by Pokemon Name</label>
             <input
@@ -109,15 +110,33 @@ useEffect(() => {
                 <p>Invalid Pokemon Name</p>
             </div>
         </div>
+        <p>List Pokemon Search</p>
         <div className="searchDiv">
             <label>Filter by Pokemon Type</label>
             <select
             name="selectedType"
             onChange={handleTypeChange}
-            value={typeInput}
+            // value={typeInput}
             >
                 <option value=""></option>
                 <option value="Normal">Normal</option>
+                <option value="Fire">Fire</option>
+                <option value="Water">Water</option>
+                <option value="Grass">Grass</option>
+                <option value="Flying">Flying</option>
+                <option value="Fighting">Fighting</option>
+                <option value="Poison">Poison</option>
+                <option value="Electric">Electric</option>
+                <option value="Ground">Ground</option>
+                <option value="Rock">Rock</option>
+                <option value="Psychic">Psychic</option>
+                <option value="Ice">Ice</option>
+                <option value="Bug">Bug</option>
+                <option value="Ghost">Ghost</option>
+                <option value="Steel">Steel</option>
+                <option value="Dragon">Dragon</option>
+                <option value="Dark">Dark</option>
+                <option value="Fairy">Fairy</option>
             </select>
             {/* <button onClick={typeSearch}>Search</button> */}
         </div>
@@ -126,10 +145,27 @@ useEffect(() => {
             <select
             name="selectedWeakness"
             onChange={handleWeaknessChange}
-            value={weaknessInput}
+            // value={weaknessInput}
             >
                 <option value=""></option>
                 <option value="Normal">Normal</option>
+                <option value="Fire">Fire</option>
+                <option value="Water">Water</option>
+                <option value="Grass">Grass</option>
+                <option value="Flying">Flying</option>
+                <option value="Fighting">Fighting</option>
+                <option value="Poison">Poison</option>
+                <option value="Electric">Electric</option>
+                <option value="Ground">Ground</option>
+                <option value="Rock">Rock</option>
+                <option value="Psychic">Psychic</option>
+                <option value="Ice">Ice</option>
+                <option value="Bug">Bug</option>
+                <option value="Ghost">Ghost</option>
+                <option value="Steel">Steel</option>
+                <option value="Dragon">Dragon</option>
+                <option value="Dark">Dark</option>
+                <option value="Fairy">Fairy</option>
             </select>
             {/* <button onClick={weaknessSearch}>Search</button> */}
         </div>

@@ -12,16 +12,19 @@ export default function Page() {
 
 
 
-    const filterPokemon = (data)=>{
+    const filterPokemon = ()=>{
         let tempArr = [];
+        let tempList = currentPokemonList
         let correctType = false;
         let correctWeakness = false;
-        tempArr = data.map((value)=>{
+        if (tempList){
+        tempList.map((value)=>{
             value.type.forEach((type)=>{
                 if (currentTypePokemon){
-                if (type == currentTypePokemon){
-                    correctType = true;
-                }
+                    console.log(currentTypePokemon)
+                    if (type == currentTypePokemon){
+                        correctType = true;
+                    }
                 }
                 else {
                     correctType = true;
@@ -29,16 +32,23 @@ export default function Page() {
             })
             value.weaknesses.forEach((weakness)=>{
                 if (currentWeaknessPokemon){
+                    console.log(currentWeaknessPokemon)
                     if (weakness == currentWeaknessPokemon){
                         correctWeakness = true;
                     }
-                    }
-                    else {
-                        correctWeakness = true;
-                    }
-                })
+                }
+                else {
+                    correctWeakness = true;
+                }
+            })
+                if (correctWeakness == true && correctType == true){
+                    tempArr.push(value)
+                }
+                correctWeakness = false;
+                correctType = false;
             })
         setFilteredPokemon(tempArr);
+        }
     }
 
 
@@ -65,7 +75,7 @@ export default function Page() {
 
     const renderPokemon = ()=>{
         let pokeList = [];
-        pokeList.push(<div className="card"><img src={start ? currentPokemon.sprites.front_default : ""} className="image"></img><p>{start ? currentPokemon.name : ""}</p></div>)
+        pokeList.push(<div className="card"><img src={start ? currentPokemon.sprites.front_default : ""} className="image"></img><p>{start ? currentPokemon.name : ""}</p><p>Types: {start ? currentPokemon.types.map((value)=>{return value.type.name + " "}) : ""}</p></div>)
         setCurrentDisplay(pokeList)
     }
 
@@ -73,23 +83,27 @@ export default function Page() {
      renderPokemon();
     }, [currentPokemon])
 
+    useEffect(() => {
+        if (currentPokemonList){
+        filterPokemon();
+        }
+       }, [currentPokemonList])
+
     const renderPokemonList = ()=>{
         let pokeList = [];
-        console.log(currentPokemonList)
-        if (currentPokemonList){
-        for (let i = 0; i < currentPokemonList.pokemon.length; i++){
-
-        //pokeList.push(<img src={start ? currentPokemon[i].sprites.front_default : ""} className="image"></img>)
-        pokeList.push(<div className="card"><p>{currentPokemonList.pokemon[i].name}</p></div>)
-        console.log(currentPokemonList.pokemon[i].name)
-        }
+        console.log(filteredPokemon)
+        if (filteredPokemon){
+        filteredPokemon.map((pokemon)=>{
+        pokeList.push(<div className="card"><img src={start ? pokemon.img : ""} className="image"></img><p>{pokemon.name}</p><p>Num: {pokemon.num}</p><p>Types: {pokemon.type.map((value)=>{return value + " "})}</p><p>Weaknesses: {pokemon.weaknesses.map((value)=>{return value + " "})}</p></div>)
+        console.log(pokemon.name)
+        })
     }
         setCurrentDisplay(pokeList)
     }
 
     useEffect(() => {
         renderPokemonList();
-    }, [currentPokemonList])
+    }, [filteredPokemon])
 
 
     return(
