@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 
 
-export default function DoTheFetch({changePokemon, changeTypePokemon, startImg}){
+export default function DoTheFetch({changePokemon, changeTypePokemon, changeWeaknessPokemon, changePokemonList, startImg}){
   const [userInput, setUserInput] = useState("");
-  const [typeInput, setTypeInput] = useState(1)
+  const [typeInput, setTypeInput] = useState("");
+  const [weaknessInput, setWeaknessInput] = useState("");
   const [currentPoke, setCurrentPoke] = useState()
-  const [currentTypePoke, setCurrentTypePoke] = useState()
+  const [currentListPoke, setCurrentTypePoke] = useState()
+
   
   
   const handleChange = (event) => {
@@ -14,6 +16,10 @@ export default function DoTheFetch({changePokemon, changeTypePokemon, startImg})
 
   const handleTypeChange = (event)=>{
     setTypeInput(event.target.value);
+  }
+
+  const handleWeaknessChange = (event)=>{
+    setWeaknessInput(event.target.value);
   }
 
   const fetchFunction = async ()=> {fetch(`https://pokeapi.co/api/v2/pokemon/${userInput}`)
@@ -34,7 +40,7 @@ export default function DoTheFetch({changePokemon, changeTypePokemon, startImg})
 //      fetchFunction();
 //  }, [])
 
-  const fetchTypeFunction = ()=> {fetch(`https://pokeapi.co/api/v2/type/${typeInput}`)
+  const fetchTypeFunction = ()=> {fetch(`https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json`)
     .then(function (response) {
       return response.json();
     })
@@ -57,14 +63,37 @@ const pokeSearch = ()=>{
 }
 
 useEffect(() => {
-    changeTypePokemon(currentTypePoke);
-}, [currentTypePoke])
+    changePokemonList(currentListPoke);
+}, [currentListPoke])
+
+
 
 const typeSearch = ()=>{
     fetchTypeFunction();
-    changeTypePokemon(currentTypePoke);
-
+    changeTypePokemon(typeInput);
 }
+
+useEffect(() => {
+    typeSearch();
+}, [typeInput])
+
+const weaknessSearch = ()=>{
+    fetchTypeFunction();
+    changeWeaknessPokemon(weaknessInput);
+}
+
+useEffect(() => {
+    weaknessSearch();
+}, [weaknessInput])
+
+// useEffect(() => {
+//     changeWeaknessPokemon(currentTypePoke);
+// }, [currentTypePoke])
+    
+// const weaknessSearch = ()=>{
+//     fetchTypeFunction();
+//     changeWeaknessPokemon(currentTypePoke);
+// }
 
     return (
         <>
@@ -81,18 +110,28 @@ const typeSearch = ()=>{
             </div>
         </div>
         <div className="searchDiv">
-            <label>Search by Pokemon Type</label>
+            <label>Filter by Pokemon Type</label>
             <select
             name="selectedType"
             onChange={handleTypeChange}
-            value={userInput}
+            value={typeInput}
             >
-                <option value="1">Normal</option>
+                <option value=""></option>
+                <option value="Normal">Normal</option>
             </select>
-            <button onClick={typeSearch}>Search</button>
-            <div className="error-hidden">
-                <p>Invalid Pokemon Name</p>
-            </div>
+            {/* <button onClick={typeSearch}>Search</button> */}
+        </div>
+        <div className="searchDiv">
+            <label>Filter by Pokemon Weakness</label>
+            <select
+            name="selectedWeakness"
+            onChange={handleWeaknessChange}
+            value={weaknessInput}
+            >
+                <option value=""></option>
+                <option value="Normal">Normal</option>
+            </select>
+            {/* <button onClick={weaknessSearch}>Search</button> */}
         </div>
         </>
     )
