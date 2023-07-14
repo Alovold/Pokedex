@@ -116,7 +116,7 @@ useEffect(() => {
             <select
             name="selectedType"
             onChange={handleTypeChange}
-            // value={typeInput}
+            
             >
                 <option value=""></option>
                 <option value="Normal">Normal</option>
@@ -138,14 +138,14 @@ useEffect(() => {
                 <option value="Dark">Dark</option>
                 <option value="Fairy">Fairy</option>
             </select>
-            {/* <button onClick={typeSearch}>Search</button> */}
+            
         </div>
         <div className="searchDiv">
             <label>Filter by Pokemon Weakness</label>
             <select
             name="selectedWeakness"
             onChange={handleWeaknessChange}
-            // value={weaknessInput}
+            
             >
                 <option value=""></option>
                 <option value="Normal">Normal</option>
